@@ -17,6 +17,14 @@ class Category(Base): # define the category table
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    
+    @property
+    def serialize(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'name'         : self.name,
+           'id'           : self.id
+       }
    
 
 class Item(Base): # define the Item table

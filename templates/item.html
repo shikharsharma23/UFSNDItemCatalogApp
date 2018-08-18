@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+	<title>Item Catalog</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+	{% for item in items %}
+		<a href='{{url_for('showDescription', selected_category = selected_category.name , selected_item=item.name)}}' > {{item.name}} </a>
+		<a href='{{url_for('editItem', selected_category = selected_category.name , selected_item=item.name)}}'>Edit Item</a>
+		<a href='{{url_for('deleteItem', selected_category = selected_category.name , selected_item=item.name)}}'>Delete Item</a>
+	{% endfor %}
+
+</body>
+</html>

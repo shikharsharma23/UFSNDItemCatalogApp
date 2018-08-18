@@ -1,0 +1,23 @@
+<html>
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+</head>
+
+<body>
+
+	<form action='{{url_for('editItem', selected_category = selected_category,selected_item=item.name)}}' method = 'post'>
+		Name:
+		<input type ='text' size='30' name='name' placeholder = '{{item.name }}'>
+		Description:
+		<textarea name = 'description' rows='5' cols='40' placeholder = '{{item.description }}'></textarea>
+		<button type="submit">Edit</button>
+		<button type="button" onclick="location.href = '{{url_for('showItems', selected_category = selected_category)}}' ">Cancel</button>
+	</form>
+
+</body>
+</html>
