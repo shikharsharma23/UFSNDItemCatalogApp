@@ -11,3 +11,8 @@
 3. run python application.py
 4. the app will be up on port 5003 at localhost
 
+# To populate DB
+
+1. The commited db can be used as is
+2. To replicate the db, run python database_setup.py, followed by python populatedb.py
+
