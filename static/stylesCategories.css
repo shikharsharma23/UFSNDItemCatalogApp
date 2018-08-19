@@ -1,0 +1,28 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    color: white;
+    height: 100%;
+	background-image: url("img/bg.jpg");
+	background-size: cover;
+    background-attachment: fixed;
+}
+
+
+.categoryHeader {
+color: #545e78; font-size: 4em; font-family: 'Signika', sans-serif; padding-bottom: 10px; text-align: center; padding-top: 2em; 
+}
+
+.col-md-6{
+	margin: auto;
+}
+.categoryTitle{
+	text-align: center;
+	margin-bottom: 2%;
+}
+
+.logoutButton{
+	margin: auto;
+	padding-top: 3%;
+	padding-left: 10%;
+}

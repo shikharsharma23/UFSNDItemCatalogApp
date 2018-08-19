@@ -6,15 +6,41 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.css')}}">
+
+    <!-- Animate Min .css for animations -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.min.css')}}">
+
+
+    <!-- Our Stylesheet!!-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesCategories.css')}}">
+
+
 </head>
 
 <body>
 
-	{% for category in categories %}
-		<a href= '{{url_for('showItems', selected_category = category.name)}}' > {{category.name}} </a>
-		<br>
-	{% endfor %}
+	<div class="categoryHeader">Item Catalog</div> 
+	<div class="container categoryList">			
+		{% for category in categories %}
+			<div class="row">
+				<div class="col-md-6 list-group-item list-group-item-primary categoryTitle"><a href= '{{url_for('showItems', selected_category = category.name)}}' > {{category.name}} </a></div>
+			<br>
+			</div>
+		{% endfor %}
 
-	<a href='{{url_for('showLogin')}}'>Login</a>
+		<div class="row">
+				<div class="col-sm-3 logoutButton"><button type="button" class="btn btn-primary" onclick="location.href = '{{url_for('showLogin')}}' ">Login</button></div>
+		</div>
+	
+	</div>
 </body>
 </html>

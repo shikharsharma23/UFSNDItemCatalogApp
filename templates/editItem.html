@@ -5,18 +5,54 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.css')}}">
+
+    <!-- Animate Min .css for animations -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.min.css')}}">
+
+
+    <!-- Our Stylesheet!!-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesEditItem.css')}}">
+
+
 
 </head>
 
 <body>
 
+	<div class="editItemHeader">Edit Item</div> 
+	<div class="container">
 	<form action='{{url_for('editItem', selected_category = selected_category,selected_item=item.name)}}' method = 'post'>
-		Name:
-		<input type ='text' size='30' name='name' placeholder = '{{item.name }}'>
-		Description:
-		<textarea name = 'description' rows='5' cols='40' placeholder = '{{item.description }}'></textarea>
-		<button type="submit">Edit</button>
-		<button type="button" onclick="location.href = '{{url_for('showItems', selected_category = selected_category)}}' ">Cancel</button>
+		<div class="row">
+			<div class="col-md-6">
+				<p><b>Name:</b></p>
+				<input type ='text' size='30' name='name' placeholder = '{{item.name }}'>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<p><b>Description:</b></p>
+				<textarea name = 'description' rows='5' cols='40' placeholder = '{{item.description }}'></textarea>
+			</div>
+		</div>
+		<div class="buttonSet">
+		<div class="row ">
+			<div class="col-md-6">
+				<button type="submit" class="btn btn-primary">Edit</button>
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-primary" onclick="location.href = '{{url_for('showItems', selected_category = selected_category)}}' ">Cancel</button>
+			</div>
+		</div>
+		</div>
+	</div>
 	</form>
 
 </body>

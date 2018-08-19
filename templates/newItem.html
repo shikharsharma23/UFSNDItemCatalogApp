@@ -7,17 +7,52 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+         <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.css')}}">
+
+    <!-- Animate Min .css for animations -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.min.css')}}">
+
+
+    <!-- Our Stylesheet!!-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesCreateNewItem.css')}}">
+
+
+
 
 </head>
 <body>
 	
+	<div class="addItemHeader">Add an Item</div> 
+
+	<div class="container">
 	<form action="{{ url_for('addItem', selected_category=selected_category )}}" method = 'post'>
-		<p><b>Item Name</b></p>
-		<input type="text" size="60" name="name" required>
-		<p><b>Item Description</b></p>
-		<input type="text" size="120" name="description" required>
-		<button type='submit'>Create</button>
+		<div class="row">
+			<div class="col-md-6">
+				<p><b>Item Name</b></p>
+				<input type="text" size="60" name="name" required>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+			<p><b>Item Description</b></p>
+			<input type="text" size="120" name="description" required>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="createButton col-md-6">
+				<button type='submit' class="btn btn-primary">Create</button>
+			</div>
+		</div>
 	</form>
+	</div>
 			
 </body>
 </html>

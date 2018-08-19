@@ -1,0 +1,15 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    color: white;
+    height: 100%;
+	background-image: url("img/bg.jpg");
+	background-size: cover;
+    background-attachment: fixed;
+}
+
+
+.addItemHeader {
+color: #545e78; font-size: 4em; font-family: 'Signika', sans-serif; padding-bottom: 10px; text-align: center; padding-top: 2em; 
+}
+

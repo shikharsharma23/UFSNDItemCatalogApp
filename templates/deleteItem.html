@@ -4,16 +4,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.css')}}">
+
+    <!-- Animate Min .css for animations -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.min.css')}}">
+
+
+    <!-- Our Stylesheet!!-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesDeleteItem.css')}}">
+
 </head>
 
 <body>
 
-     Are you sure you want to delete {{item.name}}?
-
+	<div class="deleteItemHeader">Are you sure you want to delete {{item.name}}?</div> 
+	<div class="container">
     <form action='{{url_for('deleteItem', selected_category = category.name,selected_item=item.name)}}' method = 'post'>
-              <button type="submit">Delete</button>
-              <button type="button" onclick="location.href = '{{url_for('showItems', selected_category = category.name)}}' ">Cancel</button>
+    		<div class="buttonSet">
+    		  <div class="row">
+    		  	<div class="col-md-6">
+              		<button type="submit" class="btn btn-primary">Delete</button>
+              	</div>
+              	<div class="col-md-6">
+             		 <button type="button" class="btn btn-primary" onclick="location.href = '{{url_for('showItems', selected_category = category.name)}}' ">Cancel</button>
+             	</div>
+             </div>
+         </div>
     </form>
-
+	</div>
 </body>
 </html>

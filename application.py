@@ -99,7 +99,7 @@ def editItem(selected_category,selected_item):
     itemToEdit = session.query(Item).filter_by(name=selected_item).one()
 
     if login_session['user_id'] != itemToEdit.user_id: # if user access this link directly, say that you are not authorized
-    	return "<script>function myFunction() {alert('You are not authorized to edit this item . Please create your own item in order to edit it.');}</script><body onload='myFunction()''>"
+    	return "<script>function myFunction() {alert('Please navigate back. You are not authorized to edit this item . Please create your own item in order to edit it.');}</script><body onload='myFunction()''>"
 
     if(request.method=='POST'):
         itemToEdit.name=request.form['name']
@@ -126,7 +126,7 @@ def deleteItem(selected_category,selected_item):
 
 
     if login_session['user_id'] != item.user_id: # if user access this link directly, say that you are not authorized
-    	return "<script>function myFunction() {alert('You are not authorized to delete this item . Please create your own item in order to delete/manage it.');}</script><body onload='myFunction()''>"
+    	return "<script>function myFunction() {alert('Please navigate back.You are not authorized to delete this item . Please create your own item in order to delete/manage it.');}</script><body onload='myFunction()''>"
 
 
     if(request.method=='POST'):
@@ -237,12 +237,12 @@ def gconnect():
 
     ### Output to be shown when logged in and redirecting to the desired homepage
     output = ''
-    output += '<h1>Welcome, '
+    output += '<h1 style="margin:auto;text-align:center;color:545e78;">Welcome, '
     output += login_session['username']
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px; margin-left:40%;margin-top:3%;"> '
     print("done!")
     return output   
 
