@@ -58,8 +58,10 @@ def getUserID(email): # get user from email (used at time of oauth login)
 @app.route('/')
 @app.route('/categories')
 def showCategories():
-	categories = session.query(Category).all() 
-	return render_template('categories.html', categories=categories)
+    categories = session.query(Category).all() 
+    if 'username' not in login_session:
+	     return render_template('categoriesWithLogin.html', categories=categories)
+    return render_template('categories.html', categories=categories)
 
 
 @app.route('/categories/<selected_category>')
@@ -77,9 +79,10 @@ def showDescription(selected_category,selected_item):
 
 @app.route('/categories/<selected_category>/add',methods=['GET', 'POST'])
 def addItem(selected_category):
+    if 'username' not in login_session:
+	    return redirect('/login')
     category = session.query(Category).filter_by(name=selected_category).one() 
     user = session.query(User).filter_by(email=login_session['email']).one()
-    print(user)
     if(request.method=='POST'):
         item=Item(user_id=user.id,name=request.form['name'],description=request.form['description'],category_id=category.id) 
         session.add(item)
@@ -91,7 +94,13 @@ def addItem(selected_category):
 
 @app.route('/categories/<selected_category>/<selected_item>/edit',methods=['GET', 'POST'])
 def editItem(selected_category,selected_item):
+    if 'username' not in login_session:
+	     return redirect('/login')
     itemToEdit = session.query(Item).filter_by(name=selected_item).one()
+
+    if login_session['user_id'] != itemToEdit.user_id: # if user access this link directly, say that you are not authorized
+    	return "<script>function myFunction() {alert('You are not authorized to edit this item . Please create your own item in order to edit it.');}</script><body onload='myFunction()''>"
+
     if(request.method=='POST'):
         itemToEdit.name=request.form['name']
         itemToEdit.description=request.form['description']
@@ -104,10 +113,22 @@ def editItem(selected_category,selected_item):
 
 @app.route('/categories/<selected_category>/<selected_item>/delete', methods=['GET', 'POST'])
 def deleteItem(selected_category,selected_item):
+    if 'username' not in login_session:
+	    return redirect('/login')
+
+
     category=session.query(Category).filter_by(name=selected_category).one()
     item = session.query(Item).filter_by(name=selected_item).all()
+
+
     if isinstance(item, (list,)): # multiple items fetched, delete first one
     	item=item[0]
+
+
+    if login_session['user_id'] != item.user_id: # if user access this link directly, say that you are not authorized
+    	return "<script>function myFunction() {alert('You are not authorized to delete this item . Please create your own item in order to delete/manage it.');}</script><body onload='myFunction()''>"
+
+
     if(request.method=='POST'):
         session.delete(item)
         session.commit()
@@ -249,7 +270,7 @@ def gdisconnect():
         del login_session['picture']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        return redirect(url_for('showCategories'))
     else:
         response = make_response(json.dumps('Failed to revoke token for given user.'))
         response.headers['Content-Type'] = 'application/json'
