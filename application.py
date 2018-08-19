@@ -183,9 +183,7 @@ def deleteItem(selected_category, selected_item):
 
 @app.route('/catalog.json')
 def catalogJSON():
-    #  result = session.query(Item,Category).filter
-    #  (Item.category_id == Category.id).all()
-    # trying to do with join . TodO : serialze and return joined resut
+    # TODO : trying to do with join  and show as one massive json
     categories = session.query(Category).all()
     items = session.query(Item).all()
     return jsonify(
@@ -289,12 +287,15 @@ def gconnect():
 
     # Output to be shown when logged in and redirecting to the desired homepage
     output = ''
-    output += '<h1 style="margin:auto;text-align:center;color:545e78;">Welcome, '
+    output += '<h1 style="margin:auto;'
+    output += 'text-align:center;color:545e78;">Welcome, '
     output += login_session['username']
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius:150px;-webkit-border-radius: 150px;-moz-border-radius: 150px; margin-left:40%;margin-top:3%;"> '
+    output += ' " style = "width: 300px; height: 300px;border-radius:150px;'
+    output += '-webkit-border-radius: 150px;-moz-border-radius: '
+    output += '150px; margin-left:40%;margin-top:3%;"> '
     print("done!")
     return output
 
@@ -312,7 +313,8 @@ def gdisconnect():
     print('User name is: ')
     print(login_session['username'])
     # make a call to revoke to google api
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    url = 'https://accounts.google.com/o/'
+    url += 'oauth2/revoke?token=%s' % login_session['access_token']
     h = httplib2.Http()
     # check results is ok or some error occured
     result = h.request(url, 'GET')[0]
