@@ -29,6 +29,32 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Restaurant Menu Application"
 
 
+
+## Methods to create and get new user info 
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email']) # in this login session create a new user using info retrieved from showLogin
+    session.add(newUser) # add the new user and commit
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id): # get user form user id 
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email): # get user from email (used at time of oauth login)
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
+## END
+
+
 @app.route('/')
 @app.route('/categories')
 def showCategories():
@@ -52,8 +78,10 @@ def showDescription(selected_category,selected_item):
 @app.route('/categories/<selected_category>/add',methods=['GET', 'POST'])
 def addItem(selected_category):
     category = session.query(Category).filter_by(name=selected_category).one() 
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    print(user)
     if(request.method=='POST'):
-        item=Item(name=request.form['name'],description=request.form['description'],category_id=category.id) 
+        item=Item(user_id=user.id,name=request.form['name'],description=request.form['description'],category_id=category.id) 
         session.add(item)
         session.commit()
         return redirect(url_for('showItems',selected_category=category.name))
@@ -181,10 +209,10 @@ def gconnect():
 
 
     ### Lets see if this user  exists else create a new user
-    #user_id = getUserID(login_session['email'])
-    #if not user_id : # if this email was not seen before
-    #    user_id = createUser(login_session) # create this user
-    #login_session['user_id'] = user_id # update the globaly shared login_session with the current user_id which is logged in
+    user_id = getUserID(login_session['email'])
+    if not user_id : # if this email was not seen before
+        user_id = createUser(login_session) # create this user
+    login_session['user_id'] = user_id # update the globaly shared login_session with the current user_id which is logged in
 
     ### Output to be shown when logged in and redirecting to the desired homepage
     output = ''
@@ -223,7 +251,7 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
-        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response = make_response(json.dumps('Failed to revoke token for given user.'))
         response.headers['Content-Type'] = 'application/json'
         return response
 

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+	<a href='{{url_for('addItem', selected_category = selected_category.name )}}' > Create new Item </a>
 
 	{% for item in items %}
 		<a href='{{url_for('showDescription', selected_category = selected_category.name , selected_item=item.name)}}' > {{item.name}} </a>

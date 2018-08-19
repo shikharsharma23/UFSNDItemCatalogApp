@@ -26,6 +26,12 @@ class Category(Base): # define the category table
            'id'           : self.id
        }
    
+class User(Base): # define the user table
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+
 
 class Item(Base): # define the Item table
     __tablename__ = 'item'
@@ -35,6 +41,8 @@ class Item(Base): # define the Item table
     description  = Column(String(250), nullable=False)
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+    user_id =  Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -42,14 +50,11 @@ class Item(Base): # define the Item table
        return {
            'name'         : self.name,
            'id'           : self.id,
-           'description'  : self.description
+           'description'  : self.description,
+           'categoryID'   : self.category_id,
+           'userID'       : self.user_id
        }
  
-class User(Base): # define the user table
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    email = Column(String(250), nullable=False)
 
 engine = create_engine('sqlite:///catalogitems.db') # link to engine
 # Bind the engine to the metadata of the Base class so that the
